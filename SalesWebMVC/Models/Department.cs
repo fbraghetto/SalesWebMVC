@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SalesWebMvc.Models;
 
 namespace SalesWebMvc.Models
 {
@@ -12,6 +13,7 @@ namespace SalesWebMvc.Models
 
         public Department()
         {
+
         }
 
         public Department(int id, string name)
@@ -20,14 +22,15 @@ namespace SalesWebMvc.Models
             Name = name;
         }
 
-        public void AddSeller(Seller seller)
+        public void AddSeller(Seller s)
         {
-            Sellers.Add(seller);
+            Sellers.Add(s);
         }
-
-        public double TotalSales(DateTime initial, DateTime final)
+        
+        public double TotalSales(DateTime startDate, DateTime endDate)
         {
-            return Sellers.Sum(seller => seller.TotalSales(initial, final));
+            // como não tem acesso direto, tem que buscar os vendedores e puxar as vendas desse periodo.
+            return Sellers.Sum(s => s.TotalSales(startDate, endDate));
         }
     }
 }

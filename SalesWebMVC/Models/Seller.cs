@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace SalesWebMvc.Models
 {
     public class Seller
@@ -11,6 +12,7 @@ namespace SalesWebMvc.Models
         public string Email { get; set; }
         public DateTime BirthDate { get; set; }
         public double BaseSalary { get; set; }
+
         public Department Department { get; set; }
         public ICollection<SalesRecord> Sales { get; set; } = new List<SalesRecord>();
 
@@ -38,9 +40,11 @@ namespace SalesWebMvc.Models
             Sales.Remove(sr);
         }
 
-        public double TotalSales(DateTime initial, DateTime final)
+        public double TotalSales(DateTime startDate, DateTime endDate)
         {
-            return Sales.Where(sr => sr.Date >= initial && sr.Date <= final).Sum(sr => sr.Amount);
+            return Sales.Where(sr => sr.Date >= startDate && sr.Date <= endDate).Select(sr => sr.Amount).DefaultIfEmpty(0.0).Sum();
         }
+
+
     }
 }
