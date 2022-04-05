@@ -63,5 +63,17 @@ namespace SalesWebMvc.Controllers
         }
 
 
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+                return NotFound();
+
+            var s = _sellerService.FindByID(id.Value);
+            if (s == null)
+                return NotFound();
+
+            return View(s);
+        }
+
     }
 }
