@@ -36,9 +36,17 @@ namespace SalesWebMvc.Services
 
         public async Task RemoveAsync(int id)
         {
-            var s = await _context.Seller.FindAsync(id);
-            _context.Seller.Remove(s);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var s = await _context.Seller.FindAsync(id);
+                _context.Seller.Remove(s);
+                await _context.SaveChangesAsync();
+
+            }
+            catch (DbUpdateException)
+            {
+                throw new IntegrityException("You can't delete seller because has sales attached to the seller");
+            }
         }
 
 
